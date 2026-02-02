@@ -1,5 +1,12 @@
 ## Getting Started
+If submodules break, delete the contents of Boiler/Vendor and run:
+```bash
+git submodule add -b master https://github.com/glfw/glfw.git Boiler/Vendor/glfw
+git submodule add -b master https://github.com/g-truc/glm.git Boiler/Vendor/glm
+git submodule add -b c https://github.com/Dav1dde/glad.git Boiler/Vendor/glad
+```
 
+To make:
 ```bash
 # Microsoft Windows
 cmake -S .. -B .
