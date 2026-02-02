@@ -1,4 +1,9 @@
 ## Getting Started
+Clone with 
+```bash
+git clone -- recursive https://github.com/AndrewCoon/Boiler
+```
+
 If submodules break, delete the contents of Boiler/Vendor and run:
 ```bash
 git submodule add -b master https://github.com/glfw/glfw.git Boiler/Vendor/glfw
