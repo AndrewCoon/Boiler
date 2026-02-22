@@ -6,21 +6,33 @@ option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 add_subdirectory(Boiler/Vendor/glfw)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    add_compile_options(/W4)
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -std=c++11")
-    if(NOT WIN32)
-        set(GLAD_LIBRARIES dl)
-    endif()
+    add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
 include_directories(Boiler/Headers/
                     Boiler/Vendor/glad/include/
                     Boiler/Vendor/glfw/include/
-                    Boiler/Vendor/glm/)
+                    Boiler/Vendor/glm/
+                    Boiler/Vendor/imgui/
+                    Boiler/Vendor/imgui/backends/)
 
-file(GLOB VENDORS_SOURCES Boiler/Vendor/glad/src/glad.c)
+file(GLOB VENDORS_SOURCES Boiler/Vendor/glad/src/glad.c
+                          Boiler/Vendor/imgui/imgui.cpp
+                          Boiler/Vendor/imgui/imgui_tables.cpp
+                          Boiler/Vendor/imgui/imgui_demo.cpp
+                          Boiler/Vendor/imgui/imgui_draw.cpp
+                          Boiler/Vendor/imgui/imgui_widgets.cpp
+
+                          Boiler/Vendor/imgui/backends/imgui_impl_glfw.cpp
+                          Boiler/Vendor/imgui/backends/imgui_impl_opengl3.cpp)
+                          
 file(GLOB PROJECT_HEADERS Boiler/Headers/*.hpp)
 file(GLOB PROJECT_SOURCES Boiler/Sources/*.cpp)
 file(GLOB PROJECT_SHADERS Boiler/Shaders/*.comp
@@ -29,6 +41,7 @@ file(GLOB PROJECT_SHADERS Boiler/Shaders/*.comp
                           Boiler/Shaders/*.vert)
 file(GLOB PROJECT_CONFIGS CMakeLists.txt
                           Readme.md
+                          TODO.md
                          .gitattributes
                          .gitignore
                          .gitmodules)
@@ -47,6 +60,15 @@ target_link_libraries(${PROJECT_NAME} glfw
                       ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})
+
+
+if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/assets)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/Boiler/Assets
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+    )
+endif() 
 
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
