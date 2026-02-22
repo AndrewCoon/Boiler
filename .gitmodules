@@ -10,3 +10,7 @@
 	path = Boiler/Vendor/glad
 	url = https://github.com/Dav1dde/glad.git
 	branch = c
+[submodule "Boiler/Vendor/imgui"]
+	path = Boiler/Vendor/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = master

@@ -9,6 +9,7 @@ If submodules break, delete the contents of Boiler/Vendor and run:
 git submodule add -b master https://github.com/glfw/glfw.git Boiler/Vendor/glfw
 git submodule add -b master https://github.com/g-truc/glm.git Boiler/Vendor/glm
 git submodule add -b c https://github.com/Dav1dde/glad.git Boiler/Vendor/glad
+git submodule add -b https://github.com/ocornut/imgui.git Boiler/Vendor/imgui
 ```
 
 To make:
@@ -27,3 +28,4 @@ Functionality           | Library
 OpenGL Function Loader  | [glad](https://github.com/Dav1dde/glad)
 Windowing and Input     | [glfw](https://github.com/glfw/glfw)
 OpenGL Mathematics      | [glm](https://github.com/g-truc/glm)
+ImGui                   | [imgui](https://github.com/ocornut/imgui)
